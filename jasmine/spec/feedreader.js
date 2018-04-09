@@ -1,51 +1,51 @@
 /* feedreader.js
  *
  * This is the spec file that Jasmine will read and contains
- * all of the tests that will be run against your application.
+ * all of the tests that will be run against the application.
  */
 
-$(function() {
-    describe('RSS Feeds', function() {
+$(function () {
+    describe('RSS Feeds', function () {
 
-        it('are defined', function() {
+        it('are defined', function () {
 
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
 
 
-        it('have a URL defined and a URL is not empty', function() {
+        it('have a URL defined and a URL is not empty', function () {
 
             for (i = 0; i < allFeeds.length; i++) {
                 const feed = allFeeds[i];
-              
+
                 expect(feed.url).toBeDefined();
                 expect(feed.url.length).not.toBe(0);
             };
-        }); 
+        });
 
 
-        it('have a name defined and a name is not empty', function() {
+        it('have a name defined and a name is not empty', function () {
 
             for (i = 0; i < allFeeds.length; i++) {
                 const feed = allFeeds[i];
-                  
+
                 expect(feed.name).toBeDefined();
                 expect(feed.name.length).not.toBe(0);
             };
-        }); 
+        });
     });
 
 
-    describe('The menu', function() {
+    describe('The menu', function () {
 
-        it('is hidden by default', function() {
+        it('is hidden by default', function () {
 
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
 
 
-        it('changes visibility when menu icon is clicked', function() {
+        it('changes visibility when menu icon is clicked', function () {
             const menuIcon = $('.menu-icon-link');
 
             // first click
@@ -57,32 +57,32 @@ $(function() {
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
     });
-        
 
-    describe('Initial Entries', function() {
+
+    describe('Initial Entries', function () {
         const feedContainer = $('.feed');
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             feedContainer.empty();
             loadFeed(0, done);
         });
 
-        it('at least a single entry should be loaded to the .feed container', function(done) {
+        it('are filled into the container on load', function (done) {
 
             expect(feedContainer.find('.entry').length).not.toBe(0);
             done();
         });
     });
-        
 
-    describe('New Feed Selection', function() {
+
+    describe('New Feed Selection', function () {
 
         const feedContainer = $('.feed');
         let firstFeed;
 
-        beforeEach(function(done) {
+        beforeEach(function (done) {
             feedContainer.empty();
-            loadFeed(0, function() {
+            loadFeed(0, function () {
                 // stores initial feed content
                 firstFeed = $('.feed').html();
                 // changes content
@@ -90,9 +90,16 @@ $(function() {
             });
         });
 
-        it('content (entries) should change when a new feed is loaded', function(done) {
+        it('updates content when a new feed is loaded', function (done) {
 
             expect($('.feed').html()).not.toBe(firstFeed);
+            done();
+        });
+
+        it('throws an error when feed id is out of bounds', function (done) {
+            expect(function () {
+                loadFeed(allFeeds.length + 1);
+            }).toThrowError(TypeError);
             done();
         });
     });

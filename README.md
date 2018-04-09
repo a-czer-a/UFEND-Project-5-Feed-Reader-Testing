@@ -18,3 +18,4 @@ Download or clone this repository (all files) to your local machine and open `in
 - if the menu changes visibility when menu icon is clicked
 - if feeds’ container has at least 1 entry
 - if feeds’ content changes when a new feed is loaded
+- (extra) if feed's id is not out of bounds
